@@ -13,6 +13,7 @@ struct ContentView: View {
     @Query var tasks: [TodoTask]
     @Environment(\.modelContext) private var modelContext
     @State private var showingAddTask = false
+    @State private var taskToEdit: TodoTask?
     
     var body: some View {
         NavigationStack {
@@ -28,6 +29,13 @@ struct ContentView: View {
                     .onTapGesture {
                         task.isCompleted.toggle()
                     }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            taskToEdit = task
+                        } label: {
+                            Label("Editar", systemImage: "pencil")
+                        } .tint(.blue)
+                    }
                 }
                 .onDelete(perform: deleteTask)
             }
@@ -39,6 +47,9 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showingAddTask) {
                 AddTaskViewNew()
+            }
+            .sheet(item: $taskToEdit) {
+                task in EditTaskView(task: task)
             }
         }
     }
