@@ -18,12 +18,16 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(tasks) {
-                    task in Text(task.name)
-                        .strikethrough(task.isCompleted)
-                        .foregroundColor(task.isCompleted ? .gray : .primary)
-                        .onTapGesture {
-                            task.isCompleted.toggle()
-                        }
+                    task in HStack {
+                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle" )
+                            .foregroundColor(task.isCompleted ? .green : .primary)
+                        Text(task.name)
+                            .strikethrough(task.isCompleted)
+                            .foregroundColor(task.isCompleted ? .gray : .primary)
+                    }
+                    .onTapGesture {
+                        task.isCompleted.toggle()
+                    }
                 }
                 .onDelete(perform: deleteTask)
             }
