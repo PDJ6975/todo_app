@@ -17,13 +17,18 @@ class TodoTask: Identifiable {
     var dateToComplete: Date?
     var isCompleted: Bool
     
-    init(name: String, details: String? = nil, dateToComplete: Date? = nil) {
+    // Relación con categorías
+    var category: Category?
+    
+    init(name: String, details: String? = nil, dateToComplete: Date? = nil, category: Category? = nil) {
         self.name = name
         self.details = details
         self.dateAdded = Date()
         self.dateToComplete = dateToComplete
         self.isCompleted = false
+        self.category = category
     }
+    
 }
 
 
